@@ -26,7 +26,6 @@ public class Student {
 
     //getter and setter
 
-
     public Long getId() {
         return id;
     }
@@ -59,16 +58,15 @@ public class Student {
         this.grade = grade;
     }
 
-    public LocalDateTime getCreated() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-//    public void setCreated(LocalDateTime created) {
-//        this.created = created;
+//    public void setCreateDate(LocalDateTime createDate) {
+//        this.createDate = createDate;
 //    }
 
     //toString
-
 
     @Override
     public String toString() {
@@ -77,7 +75,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", grade=" + grade +
-                ", created=" + createDate +
+                ", createDate=" + createDate +
                 '}';
     }
 }
