@@ -11,7 +11,7 @@ public interface StudentRepository {// Here we will create methods for CRUD oper
     Optional<Student> findById(Long id); // we use optional here because from here we may get NullPointerException it handles that
     void save(Student student);
     void update(Student student);
-    void delete(Student student);
+    void delete(Long id);
 
 
 
