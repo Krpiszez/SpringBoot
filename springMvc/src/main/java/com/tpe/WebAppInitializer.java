@@ -7,7 +7,9 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     // This one is for DB and Hibernate Configuration
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        return new Class[]{
+                RootContextConfig.class
+        };
     }
     // Mvc Configuration Setting
     @Override

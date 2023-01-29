@@ -1,22 +1,27 @@
 package com.tpe.domain;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-//@Entity
-//@Table(name="tbl_student")
+@Entity
+@Table(name="tbl_student")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "Please enter firstName")
     private String firstName;
 
+    @NotEmpty(message = "Please enter lastName")
     private String lastName;
 
+    @NotNull(message="Please enter grade")
     private Integer grade;
 
-    private LocalDateTime created = LocalDateTime.now();
+    private LocalDateTime createDate = LocalDateTime.now();
 
 
     //getter and setter
@@ -55,7 +60,7 @@ public class Student {
     }
 
     public LocalDateTime getCreated() {
-        return created;
+        return createDate;
     }
 
 //    public void setCreated(LocalDateTime created) {
@@ -72,7 +77,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", grade=" + grade +
-                ", created=" + created +
+                ", created=" + createDate +
                 '}';
     }
 }
