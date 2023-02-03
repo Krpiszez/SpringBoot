@@ -6,9 +6,9 @@ import java.util.Optional;
 
 public interface StudentRepo {
 
-    List<Student> getAll();
+    List<Student> getAll(Long id);
 
-    Optional<Student> findById();
+    Optional<Student> findById(Long id);
 
     void save(Student student);
 
