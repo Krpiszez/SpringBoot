@@ -17,7 +17,7 @@ public class StudentRepoImp implements StudentRepo{
     private SessionFactory sessionFactory;
 
     @Override
-    public List<Student> getAll(Long id) {
+    public List<Student> getAll() {
         Session session = sessionFactory.openSession();
         Transaction tx = session.beginTransaction();
         List<Student> studentList = session.createQuery("From Student", Student.class).getResultList();

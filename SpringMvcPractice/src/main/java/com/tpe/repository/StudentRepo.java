@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface StudentRepo {
 
-    List<Student> getAll(Long id);
+    List<Student> getAll();
 
     Optional<Student> findById(Long id);
 
