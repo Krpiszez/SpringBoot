@@ -6,6 +6,10 @@ import com.tpe.service.StudentService;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -69,6 +73,26 @@ public class StudentController {
         map.put("status", "true");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-    
+    // Get students using pageable. When there is too much data in a table then get the records by smaller groups as pages.
+    @GetMapping("/page")
+    public ResponseEntity<Page<Student>> getStudentWithPage(@RequestParam("page") int page, // -Required Info- Page number => first page will be "0"
+                                                            @RequestParam("size") int size, // -Required Info- Number of students per page
+                                                            @RequestParam("sort") String prop, // -Optional Info- On which field sorting will be done
+                                                            @RequestParam("direction") Sort.Direction direction){ //-Optional Info- Sorting will be Ascending or Descending
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, prop));
+        Page<Student> studentPage = studentService.getAllStudentsWithPage(pageable);
+        return ResponseEntity.ok(studentPage);
+    }
+
+    //Method to bring Student by their lastName
+
+    @GetMapping("/querylastname")
+    public ResponseEntity<List<Student>> getStudentByLastName(@RequestParam ("lastName") String lastName){
+        List<Student> studentList = studentService.getStudentByLastName(lastName);
+        return ResponseEntity.ok(studentList);
+    }
+
+    //Method to bring Student by their grade using JPQL ==> Java Persistence Query Language
+//    @GetMapping("grade/{grade}")
 
 }

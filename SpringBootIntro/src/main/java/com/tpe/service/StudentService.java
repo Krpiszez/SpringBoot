@@ -6,6 +6,8 @@ import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +71,14 @@ public class StudentService {
         existingStudent.setEmail(studentDTO.getEmail());
 
         studentRepository.save(existingStudent); // this is like assignment we are updating our record in table
+    }
 
+    public Page<Student> getAllStudentsWithPage(Pageable pageable) {
+        return studentRepository.findAll(pageable);
+    }
+
+    //Service method to bring student by Last Name
+    public List<Student> getStudentByLastName(String lastName) {
+        return studentRepository.findStudentByLastName(lastName);
     }
 }
