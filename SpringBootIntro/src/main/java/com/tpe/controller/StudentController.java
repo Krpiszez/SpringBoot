@@ -62,8 +62,8 @@ public class StudentController {
 
     @PutMapping("{id}")
     public ResponseEntity<Map<String, String>> updateStudent(@PathVariable("id") Long id,
-                                                             @Valid @RequestBody StudentDTO student){
-        studentService.updateStudent(id, student);
+                                                             @Valid @RequestBody StudentDTO studentDTO){
+        studentService.updateStudent(id, studentDTO);
         Map<String, String> map = new HashMap<>();
         map.put("message", "Student is updated successfully!");
         map.put("status", "true");
