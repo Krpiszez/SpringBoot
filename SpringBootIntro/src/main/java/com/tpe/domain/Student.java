@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter // This getter and setter annotations from Lombok handle the getter-setter methods.
@@ -39,5 +40,8 @@ public class Student {
     /*final*/ private Integer grade;
     @Setter(AccessLevel.NONE) // doesn't create setter method for this variable.
     private LocalDateTime createDate = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "student")
+    private List<Book> bookList;
 
 }

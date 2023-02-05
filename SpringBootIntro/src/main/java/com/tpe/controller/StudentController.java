@@ -3,8 +3,11 @@ package com.tpe.controller;
 import com.tpe.domain.Student;
 import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.websocket.server.PathParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +25,8 @@ import java.util.Map;
 @RestController // here this annotation is to create an API ???
 @RequestMapping("/students") // http://localhost:8080/students/.......
 public class StudentController {
+
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
 
     @Autowired
     private StudentService studentService;
@@ -106,6 +111,12 @@ public class StudentController {
         return ResponseEntity.ok(studentDTO);
     }
 
+    //Method to create logs ?
+    @GetMapping("/welcome")
+    public String welcome(HttpServletRequest request){
+        logger.warn("-----------------Welcome{}", request.getServletPath());
+        return "Welcome to Student Controller Class";
+    }
 
 
 }
