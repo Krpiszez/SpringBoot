@@ -81,4 +81,8 @@ public class StudentService {
     public List<Student> getStudentByLastName(String lastName) {
         return studentRepository.findStudentByLastName(lastName);
     }
+
+    public List<Student> getStudentByGrade(Integer grade) {
+        return studentRepository.findStudentByGrade(grade);
+    }
 }

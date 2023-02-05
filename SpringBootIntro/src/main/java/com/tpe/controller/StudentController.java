@@ -93,6 +93,10 @@ public class StudentController {
     }
 
     //Method to bring Student by their grade using JPQL ==> Java Persistence Query Language
-//    @GetMapping("grade/{grade}")
+    @GetMapping("grade/{grade}")
+    public ResponseEntity<List<Student>> getStudentByGrade(@PathVariable("grade") Integer grade){
+        List<Student> studentList = studentService.getStudentByGrade(grade);
+        return ResponseEntity.ok(studentList);
+    }
 
 }
