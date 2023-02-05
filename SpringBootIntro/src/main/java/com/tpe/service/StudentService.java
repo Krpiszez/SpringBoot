@@ -81,8 +81,13 @@ public class StudentService {
     public List<Student> getStudentByLastName(String lastName) {
         return studentRepository.findStudentByLastName(lastName);
     }
-
+    //Service method to bring student by Grade with JPQL ==> Java Persistence Query Language
     public List<Student> getStudentByGrade(Integer grade) {
         return studentRepository.findStudentByGrade(grade);
+    }
+
+    public StudentDTO getStudentDTOById(Long id) {
+        return studentRepository.findStudentDTOById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Student with " + id + " id can not be found."));
     }
 }

@@ -99,4 +99,13 @@ public class StudentController {
         return ResponseEntity.ok(studentList);
     }
 
+    //Get the DTO(Data Transfer Object) from Repository using JPQL => Java Persistence Query Language
+    @GetMapping("/query/dto")
+    public ResponseEntity<StudentDTO> getStudentDTOById(@RequestParam("id") Long id){
+        StudentDTO studentDTO = studentService.getStudentDTOById(id);
+        return ResponseEntity.ok(studentDTO);
+    }
+
+
+
 }
