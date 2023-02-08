@@ -37,8 +37,8 @@ public class BookController {
         return ResponseEntity.ok(bookList);
     }
 
-    @GetMapping("student")
-    public ResponseEntity<List<Book>> getBookByStudent(Student student){
+    @GetMapping("/{student}")
+    public ResponseEntity<List<Book>> getBookByStudent(@Valid @PathVariable Student student){
         List<Book> bookList = bookService.findBookByStudent(student);
         return ResponseEntity.ok(bookList);
     }

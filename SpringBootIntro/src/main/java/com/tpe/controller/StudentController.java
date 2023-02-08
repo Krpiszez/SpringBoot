@@ -118,5 +118,11 @@ public class StudentController {
         return "Welcome to Student Controller Class";
     }
 
+    @GetMapping("/name/{firstName}")
+    public ResponseEntity<List<Student>> getStudentByName(@PathVariable("firstName") String firstName){
+        List<Student> studentList = studentService.getStudentByName(firstName);
+        return ResponseEntity.ok(studentList);
+    }
+
 
 }

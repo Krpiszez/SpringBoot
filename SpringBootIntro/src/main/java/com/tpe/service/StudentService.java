@@ -90,4 +90,8 @@ public class StudentService {
         return studentRepository.findStudentDTOById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Student with " + id + " id can not be found."));
     }
+
+    public List<Student> getStudentByName(String firstName) {
+        return studentRepository.findStudentByFirstName(firstName);
+    }
 }
