@@ -52,5 +52,13 @@ public class BookController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<List<Book>> getBookByStudentId(@PathVariable Student student){
+
+            List<Book> bookList = bookService.findBookByStudent(student);
+            return ResponseEntity.ok(bookList);
+
+    }
+
 
 }

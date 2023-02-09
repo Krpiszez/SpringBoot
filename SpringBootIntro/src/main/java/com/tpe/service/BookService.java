@@ -24,7 +24,7 @@ public class BookService {
 
     public List<Book> findBookByStudent(Student student) {
         if (bookRepository.existsByStudent(student)){
-            throw new ResourceNotFoundException("Student with id: " +student+"is not exist");
+            throw new ResourceNotFoundException("Student with id: " +student+ "is not exist");
         }
 
         return bookRepository.findByStudent(student);
@@ -41,4 +41,5 @@ public class BookService {
         Book book = getBookById(id);
         bookRepository.delete(book);
     }
+
 }
