@@ -124,5 +124,11 @@ public class StudentController {
         return ResponseEntity.ok(studentList);
     }
 
+    @GetMapping("/successful")
+    public ResponseEntity<List<Student>> getSuccessfulStudents(@RequestParam("grade") Integer grade){
+        List<Student> studentList = studentService.getSuccessfulStudents(grade);
+        return ResponseEntity.ok(studentList);
+    }
+
 
 }

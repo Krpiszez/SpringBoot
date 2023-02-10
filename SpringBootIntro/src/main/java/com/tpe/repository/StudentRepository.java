@@ -30,4 +30,6 @@ public interface StudentRepository extends JpaRepository<Student, Long>{
 
 
     List<Student> findStudentByFirstName(String firstName);
+    @Query("select s from Student s where s.grade > :pGrade")
+    List<Student> findSuccessfulStudents(@Param("pGrade") Integer grade);
 }

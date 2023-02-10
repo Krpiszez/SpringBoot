@@ -94,4 +94,8 @@ public class StudentService {
     public List<Student> getStudentByName(String firstName) {
         return studentRepository.findStudentByFirstName(firstName);
     }
+
+    public List<Student> getSuccessfulStudents(Integer grade) {
+        return studentRepository.findSuccessfulStudents(grade);
+    }
 }
