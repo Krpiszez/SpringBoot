@@ -1,4 +1,4 @@
-package com.tpe.ecommerce;
+package com.tpe;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

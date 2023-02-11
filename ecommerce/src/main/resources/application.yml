@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 
   error:
     include-binding-errors: always
@@ -12,7 +12,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/springboot_db
+    url: jdbc:postgresql://localhost:5432/ecommerce_db
     username: mvc_user
     password: mvc_password
     driver-class-name: org.postgresql.Driver
