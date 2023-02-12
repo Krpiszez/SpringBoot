@@ -7,9 +7,13 @@ import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Function;
 
 @Service
 public class CategoryService {
@@ -39,6 +43,10 @@ public class CategoryService {
         return categoryRepository.getCategoriesHasLetterA();
     }
 
+    public List<Category> getCategoriesFirstLetterC() {
+        return categoryRepository.getCategoriesFirstLetterC();
+    }
+
     public CategoryResponseDTO deleteById(Long id) {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("Category with id: " + id + " is not found!"));
@@ -56,5 +64,20 @@ public class CategoryService {
         categoryResponseDTO.setId(category.getId());
         categoryResponseDTO.setName(category.getName());
         return categoryResponseDTO;
+    }
+
+    public Page<CategoryResponseDTO> getCategoriesByPage(Pageable pageable) {
+        Page<Category> categoryPage = categoryRepository.findAll(pageable);
+        // we need to map Page<Category> to Page<CategoryResponseDTO>
+        Page<CategoryResponseDTO> categoryResponseDTOPage = categoryPage.map(new Function<Category, CategoryResponseDTO>() {
+            @Override
+            public CategoryResponseDTO apply(Category category) {
+                CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
+                categoryResponseDTO.setName(category.getName());
+                categoryResponseDTO.setId(category.getId());
+                return categoryResponseDTO;
+            }
+        });
+        return categoryResponseDTOPage;
     }
 }

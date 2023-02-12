@@ -12,4 +12,7 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     boolean existsByName(String name);
     @Query("select c from Category c where c.name like '%a%'")
     List<Category> getCategoriesHasLetterA();
+
+    @Query("select c from Category c where c.name like 'C%'")
+    List<Category> getCategoriesFirstLetterC();
 }
