@@ -28,4 +28,24 @@ public class CategoryController {
         List<Category> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
+
+    @GetMapping("/secondLetterA")
+    public ResponseEntity<List<Category>> getCategoriesHasLetterA(){
+        List<Category> categories = categoryService.getCategoriesHasLetterA();
+        return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<CategoryResponseDTO> getCategoryById(@RequestParam("id") Long id){
+        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(id);
+        return ResponseEntity.ok(categoryResponseDTO);
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<CategoryResponseDTO> deleteCategoryById(@PathVariable("id") Long id){
+        CategoryResponseDTO categoryResponseDTO = categoryService.deleteById(id);
+        return ResponseEntity.ok(categoryResponseDTO);
+    }
+
+
 }
