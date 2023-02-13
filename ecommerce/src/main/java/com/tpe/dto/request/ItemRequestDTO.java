@@ -13,8 +13,6 @@ import jakarta.validation.constraints.NotBlank;
 @AllArgsConstructor
 public class ItemRequestDTO {
 
-
-
     @NotBlank(message="Please enter item name")
     private String name;
 

@@ -58,12 +58,17 @@ public class CategoryService {
     }
 
     public CategoryResponseDTO getCategoryById(Long id) {
-        Category category = categoryRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Category with id: " + id + " is not found!"));
+        Category category = getCategoryEntityById(id);
         CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
         categoryResponseDTO.setId(category.getId());
         categoryResponseDTO.setName(category.getName());
         return categoryResponseDTO;
+    }
+
+    public Category getCategoryEntityById(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Category with id: " + id + " is not found!"));
+        return category;
     }
 
     public Page<CategoryResponseDTO> getCategoriesByPage(Pageable pageable) {
@@ -79,5 +84,15 @@ public class CategoryService {
             }
         });
         return categoryResponseDTOPage;
+    }
+
+    public void updateCategoryById(Long id, CategoryRequestDTO categoryRequestDTO) {
+        Category category = getCategoryEntityById(id);
+        boolean isExist = categoryRepository.existsByName(categoryRequestDTO.getName());
+        if (isExist && !category.getName().equals(categoryRequestDTO.getName())){
+            throw new ConflictException("This Category with name: " + categoryRequestDTO.getName() + " already exist!");
+        }
+        category.setName(categoryRequestDTO.getName());
+        categoryRepository.save(category);
     }
 }
