@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/item")
@@ -60,6 +62,16 @@ public class ItemController {
     public ResponseEntity<List<ItemResponseDTO>> getItemByCategoryId(@PathVariable("id") Long categoryId){
         List<ItemResponseDTO> itemResponseDTOList = itemService.getItemByCategoryId(categoryId);
         return ResponseEntity.ok(itemResponseDTOList);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Map<String, ItemResponseDTO>> updateItem(@PathVariable Long id,
+                                                                   @Valid @RequestBody ItemRequestDTO itemRequestDTO){
+        String message = "Item with id: " + id + " is updated successfully!";
+        ItemResponseDTO itemResponseDTO = itemService.updateItemByDTO(id, itemRequestDTO);
+        Map<String, ItemResponseDTO> map = new HashMap<>();
+        map.put(message, itemResponseDTO);
+        return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
 

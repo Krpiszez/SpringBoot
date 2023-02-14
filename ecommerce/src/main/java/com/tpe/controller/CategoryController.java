@@ -69,7 +69,7 @@ public class CategoryController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updateCategory(@PathVariable("id") Long id,
-                                                              @Valid @RequestBody CategoryRequestDTO categoryRequestDTO){
+                                                 @Valid @RequestBody CategoryRequestDTO categoryRequestDTO){
         categoryService.updateCategoryById(id, categoryRequestDTO);
         return ResponseEntity.ok("Update is successful");
     }

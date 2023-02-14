@@ -71,4 +71,23 @@ public class ItemService {
         }
         return itemResponseDTOList;
     }
+
+    public ItemResponseDTO updateItemByDTO(Long id, ItemRequestDTO itemRequestDTO) {
+        Item item = getItemById(id);
+        CategoryResponseDTO categoryResponseDTO = categoryService.getCategoryById(itemRequestDTO.getCategory_id());
+        Category category = new Category(categoryResponseDTO.getId(), categoryResponseDTO.getName());
+        item.setName(itemRequestDTO.getName());
+        item.setCategory(category);
+        item.setPrice(itemRequestDTO.getPrice());
+        item.setDescription(itemRequestDTO.getDescription());
+        itemRepository.save(item);
+
+        ItemResponseDTO itemResponseDTO = new ItemResponseDTO(item.getId(), item.getName(), item.getDescription(), item.getPrice(), item.getCategory());
+        itemResponseDTO.setId(item.getId());
+        itemResponseDTO.setCategory(category);
+        itemResponseDTO.setName(itemRequestDTO.getName());
+        itemResponseDTO.setPrice(itemRequestDTO.getPrice());
+        itemResponseDTO.setDescription(itemRequestDTO.getDescription());
+        return itemResponseDTO;
+    }
 }
