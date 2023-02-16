@@ -13,7 +13,7 @@ import java.util.List;
 public class BookService {
 
     @Autowired
-    BookRepository bookRepository;
+    private BookRepository bookRepository;
 
     @Autowired
     StudentService studentService;
