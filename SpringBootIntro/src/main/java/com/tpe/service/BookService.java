@@ -14,6 +14,10 @@ public class BookService {
 
     @Autowired
     BookRepository bookRepository;
+
+    @Autowired
+    StudentService studentService;
+
     public void saveBook(Book book) {
         bookRepository.save(book);
     }
@@ -22,13 +26,6 @@ public class BookService {
     }
 
 
-    public List<Book> findBookByStudent(Student student) {
-        if (bookRepository.existsByStudent(student)){
-            throw new ResourceNotFoundException("Student with id: " +student+ "is not exist");
-        }
-
-        return bookRepository.findByStudent(student);
-    }
 
     public Book getBookById(Long id) {
         Book book = bookRepository
@@ -42,4 +39,10 @@ public class BookService {
         bookRepository.delete(book);
     }
 
+    public List<Book> findBookByStudent(Long studentId) {
+
+        Student student = studentService.getStudentById(studentId);
+        return bookRepository.findByStudent(student);
+
+    }
 }

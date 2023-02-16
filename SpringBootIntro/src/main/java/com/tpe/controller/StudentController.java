@@ -3,9 +3,9 @@ package com.tpe.controller;
 import com.tpe.domain.Student;
 import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import javax.websocket.server.PathParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -129,6 +129,4 @@ public class StudentController {
         List<Student> studentList = studentService.getSuccessfulStudents(grade);
         return ResponseEntity.ok(studentList);
     }
-
-
 }

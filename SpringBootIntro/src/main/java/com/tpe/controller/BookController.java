@@ -3,7 +3,7 @@ package com.tpe.controller;
 import com.tpe.domain.Book;
 import com.tpe.domain.Student;
 import com.tpe.service.BookService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +37,9 @@ public class BookController {
         return ResponseEntity.ok(bookList);
     }
 
-    @GetMapping("/{student}")
-    public ResponseEntity<List<Book>> getBookByStudent(@Valid @PathVariable Student student){
-        List<Book> bookList = bookService.findBookByStudent(student);
+    @GetMapping("/student/{id}")
+    public ResponseEntity<List<Book>> getBookByStudent(@Valid @PathVariable Long studentId){
+        List<Book> bookList = bookService.findBookByStudent(studentId);
         return ResponseEntity.ok(bookList);
     }
 
@@ -51,14 +51,4 @@ public class BookController {
         map.put("status", "true");
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<List<Book>> getBookByStudentId(@PathVariable Student student){
-
-            List<Book> bookList = bookService.findBookByStudent(student);
-            return ResponseEntity.ok(bookList);
-
-    }
-
-
 }

@@ -11,11 +11,7 @@ import java.util.List;
 public interface BookRepository extends JpaRepository<Book, Long> {
 
 
-    boolean existsByStudent(Student student);
-
     List<Book> findByStudent(Student student);
 
-    boolean existsByStudentId(Long id);
 
-    List<Book> findByStudentId(Long id);
 }
