@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -27,9 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .antMatchers("/", "index.html", "js/*", "css/*")
-                .permitAll()
-                .anyRequest()
+                .antMatchers("/", "index.html", "js/*", "css/*", "/register")
+                .permitAll()/*.and().authorizeRequests().antMatchers("/students/**").hasRole("ADMIN")
+                */.anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(10);
 
     }
-
+    @Bean
     public DaoAuthenticationProvider authenticationProvider(){
 
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

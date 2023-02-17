@@ -23,7 +23,9 @@ public class UserController {
     @RequestMapping("/register") // you can use @RequestMapping here because here there will only be 1 end point
 
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRequest userRequest){
-
+        String message = "User has been created successfully!";
+        userService.saveUser(userRequest);
+        return ResponseEntity.ok(message);
     }
 
 
