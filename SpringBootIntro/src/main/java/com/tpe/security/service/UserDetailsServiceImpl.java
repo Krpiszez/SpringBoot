@@ -30,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                     .security
                     .core
                     .userdetails
-                    .User(user.getUsername()
+                    .User(user.getUserName()
                     , user.getPassword()
                     , buildGrantedAuthorities(user.getRoles()));
         }else {
