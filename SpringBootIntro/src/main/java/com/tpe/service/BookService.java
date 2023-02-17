@@ -2,6 +2,7 @@ package com.tpe.service;
 
 import com.tpe.domain.Book;
 import com.tpe.domain.Student;
+import com.tpe.dto.BookDTO;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,10 @@ public class BookService {
         Student student = studentService.getStudentById(studentId);
         return bookRepository.findByStudent(student);
 
+    }
+
+    public BookDTO getBookDTOById(Long id) {
+        Book book = getBookById(id);
+        return new BookDTO(book.getId(), book.getName(), book.getStudent());
     }
 }

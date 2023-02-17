@@ -2,6 +2,7 @@ package com.tpe.controller;
 
 import com.tpe.domain.Book;
 import com.tpe.domain.Student;
+import com.tpe.dto.BookDTO;
 import com.tpe.service.BookService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,12 @@ public class BookController {
         map.put("message", "Book is deleted successfully!");
         map.put("status", "true");
         return new ResponseEntity<>(map, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BookDTO> getBookDTOById(@PathVariable Long id){
+        BookDTO bookDTO = bookService.getBookDTOById(id);
+
+        return ResponseEntity.ok(bookDTO);
     }
 }
