@@ -23,7 +23,7 @@ public class JwtUtils {
     //jwt token life cycle
     private long jwtExpiration = 86400000; // 24 hours ==> on milisec
 
-    // *********  CREATE JWT TOKEN  **********
+    // *********  CREATE(GENERATE) JWT TOKEN  **********
 
     /*
         To create JWT we need 3 things

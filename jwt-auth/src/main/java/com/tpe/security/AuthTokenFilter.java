@@ -6,7 +6,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Component
 public class AuthTokenFilter extends OncePerRequestFilter {
 
     @Autowired
@@ -41,7 +39,8 @@ public class AuthTokenFilter extends OncePerRequestFilter {
 
                 // authenticated user
                 UsernamePasswordAuthenticationToken authenticatedUser =
-                        new UsernamePasswordAuthenticationToken(userDetails,// user itself
+                        new UsernamePasswordAuthenticationToken(
+                                userDetails,// user itself
                                 null, // credentials
                                 userDetails.getAuthorities());// user authority roles
                 // after we validated user we need to place/populate user details in to a security context.

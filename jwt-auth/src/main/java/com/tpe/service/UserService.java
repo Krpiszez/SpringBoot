@@ -27,7 +27,7 @@ public class UserService {
 
     public void save(RegisterRequest registerRequest) {
 
-        if(userRepository.existByUserName(registerRequest.getUserName())){
+        if(userRepository.existsByUserName(registerRequest.getUserName())){
             throw new ConflictException("User with user name: " + registerRequest.getUserName() + " already exists!");
         }
         User user = new User();
