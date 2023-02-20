@@ -12,7 +12,7 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/spring_jwt_db
+    url: jdbc:postgresql://localhost:5432/spring_practice_db
     username: mvc_user
     password: mvc_password
     driver-class-name: org.postgresql.Driver
