@@ -29,7 +29,7 @@ public class UserService {
     @Autowired
     private RoleService roleService;
 
-    public void save(RegisterRequest registerRequest) {
+    public void saveCustomer(RegisterRequest registerRequest) {
         if (userRepository.existsByUserName(registerRequest.getUserName())){
             throw new ConflictException("User with user name: " + registerRequest.getUserName() + " already exists!");
         }
@@ -77,5 +77,21 @@ public class UserService {
         }
         return userResponseList;
 
+    }
+
+    public void saveShopOwner(RegisterRequest registerRequest) {
+        if (userRepository.existsByUserName(registerRequest.getUserName())){
+            throw new ConflictException("User with user name: " + registerRequest.getUserName() + " already exists!");
+        }
+        User admin = new User();
+        admin.setUserName(registerRequest.getUserName());
+        admin.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        admin.setFirstName(registerRequest.getFirstName());
+        admin.setLastName(registerRequest.getLastName());
+        Role role = roleService.getRoleType(UserRole.ROLE_SHOPOWNER);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        admin.setRoles(roles);
+        userRepository.save(admin);
     }
 }

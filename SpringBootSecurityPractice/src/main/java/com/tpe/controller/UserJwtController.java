@@ -32,7 +32,7 @@ public class UserJwtController {
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterRequest registerRequest){
 
-        userService.save(registerRequest);
+        userService.saveCustomer(registerRequest);
         String message = "User has been registered successfully!";
         return new ResponseEntity<>(message, HttpStatus.CREATED);
 
@@ -42,6 +42,15 @@ public class UserJwtController {
     public ResponseEntity<String> registerAdmin(@Valid @RequestBody RegisterRequest registerRequest){
 
         userService.saveAdmin(registerRequest);
+        String message = "User has been registered successfully!";
+        return new ResponseEntity<>(message, HttpStatus.CREATED);
+
+    }
+
+    @PostMapping("/register/shop-owner")
+    public ResponseEntity<String> registerShopOwner(@Valid @RequestBody RegisterRequest registerRequest){
+
+        userService.saveShopOwner(registerRequest);
         String message = "User has been registered successfully!";
         return new ResponseEntity<>(message, HttpStatus.CREATED);
 
