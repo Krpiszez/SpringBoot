@@ -1,11 +1,17 @@
 package com.tpe.service;
 
 import com.tpe.domain.Customer;
+import com.tpe.domain.User;
 import com.tpe.dto.request.CustomerRequest;
+import com.tpe.dto.response.CustomerResponse;
 import com.tpe.exception.ConflictException;
+import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -25,7 +31,38 @@ public class CustomerService {
         customer.setEmail(customerRequest.getEmail());
         customer.setPhone(customerRequest.getPhone());
         customer.setLastName(customerRequest.getLastName());
-        customer.setUser(userService.findUserByName(customerRequest.getUserName()));
+        User user = userService.findUserByName(customerRequest.getUserName());
+        customer.setUser(user);
         customerRepository.save(customer);
+    }
+
+    public List<CustomerResponse> getAllCustomers() {
+        List<Customer> customerList = customerRepository.findAll();
+        List<CustomerResponse> customerResponseList = new ArrayList<>();
+
+        for (Customer c: customerList){
+            CustomerResponse customerResponse =
+                    new CustomerResponse(c.getEmail(), c.getName(), c.getLastName(), c.getPhone(), c.getUser().getUserName());
+            customerResponseList.add(customerResponse);
+        }
+
+        return customerResponseList;
+    }
+
+    public Customer getCustomerById(Long id) {
+        Customer customer = customerRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Customer with id: " + id+ " can not be found!"));
+        return customer;
+    }
+
+    public CustomerResponse getCustomerResponseById(Long id) {
+        Customer customer = getCustomerById(id);
+        CustomerResponse customerResponse =
+                new CustomerResponse(
+                        customer.getName(),
+                        customer.getLastName(),
+                        customer.getEmail(), customer.getPhone(), customer.getUser().getUserName());
+
+        return customerResponse;
     }
 }

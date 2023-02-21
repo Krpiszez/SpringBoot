@@ -31,7 +31,7 @@ public class UserService {
             throw new ConflictException("User with user name: " + registerRequest.getUserName() + " already exists!");
         }
         User user = new User();
-        user.setUserName(user.getUserName());
+        user.setUserName(registerRequest.getUserName());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setFirstName(registerRequest.getFirstName());
         user.setLastName(registerRequest.getLastName());
@@ -45,5 +45,21 @@ public class UserService {
     public User findUserByName(String userName) {
         return userRepository.findByUserName(userName)
                 .orElseThrow(()-> new ResourceNotFoundException("No user with name: " + userName + " is found!"));
+    }
+
+    public void saveAdmin(RegisterRequest registerRequest) {
+        if (userRepository.existsByUserName(registerRequest.getUserName())){
+            throw new ConflictException("User with user name: " + registerRequest.getUserName() + " already exists!");
+        }
+        User admin = new User();
+        admin.setUserName(registerRequest.getUserName());
+        admin.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        admin.setFirstName(registerRequest.getFirstName());
+        admin.setLastName(registerRequest.getLastName());
+        Role role = roleService.getRoleType(UserRole.ROLE_ADMIN);
+        Set<Role> roles = new HashSet<>();
+        roles.add(role);
+        admin.setRoles(roles);
+        userRepository.save(admin);
     }
 }

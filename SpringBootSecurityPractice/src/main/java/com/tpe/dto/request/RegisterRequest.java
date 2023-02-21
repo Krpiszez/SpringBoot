@@ -31,6 +31,5 @@ public class RegisterRequest {
     @Size(min=5, max=20, message = "Password '${validatedValue}' must be between {min} and {max} chars long")
     private String password;
 
-    private Set<String> roles;
 
 }
