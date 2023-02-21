@@ -4,6 +4,7 @@ import com.tpe.domain.Role;
 import com.tpe.domain.User;
 import com.tpe.domain.enums.UserRole;
 import com.tpe.dto.request.RegisterRequest;
+import com.tpe.dto.response.UserResponse;
 import com.tpe.exception.ConflictException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.UserRepository;
@@ -11,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -61,5 +64,18 @@ public class UserService {
         roles.add(role);
         admin.setRoles(roles);
         userRepository.save(admin);
+    }
+
+    public List<UserResponse> findAllUsers() {
+        List<User> userList = userRepository.findAll();
+        List<UserResponse> userResponseList = new ArrayList<>();
+
+        for (User u: userList){
+            UserResponse userResponse =
+                    new UserResponse(u.getFirstName(), u.getLastName(), u.getUserName(), u.getRoles());
+            userResponseList.add(userResponse);
+        }
+        return userResponseList;
+
     }
 }
