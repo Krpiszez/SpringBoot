@@ -38,8 +38,8 @@ public class JwtController {
     public ResponseEntity<String> login(@Valid @RequestBody LoginRequest loginRequest){
         // Authenticating user
         Authentication authManager = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-                loginRequest.getPassword(),
-                loginRequest.getUserName()
+                loginRequest.getUserName(),
+                loginRequest.getPassword()
         ));
 
         //if user is authenticated we need to create jwt
