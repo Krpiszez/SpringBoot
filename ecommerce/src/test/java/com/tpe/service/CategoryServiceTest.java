@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class) // to initialize mock object
 class CategoryServiceTest {
@@ -24,14 +27,12 @@ class CategoryServiceTest {
     private CategoryService categoryService = new CategoryService();
 
     private Category category;
+    private CategoryRequestDTO requestDTO;
 
     @BeforeEach
     void setUp() {
-
-        category = new Category();
-        category.setName("TV");
-        category.setId(1L);
-
+        requestDTO = new CategoryRequestDTO();
+        requestDTO.setName("TV");
     }
 
     @AfterEach
@@ -40,29 +41,30 @@ class CategoryServiceTest {
 
     @Test
     @DisplayName("Test save category when the categoryName is not in DB")
-    void saveCategory() {
+    void testSaveCategoryWhenDataIsSaved() {
 
         //given-preconditions
-        given(categoryRepository.existsByName(category.getName())).willReturn(false);
+        given(categoryRepository.existsByName(requestDTO.getName())).willReturn(false);
 
-        //given(categoryRepository.save(category)).willReturn(category);
-        CategoryRequestDTO dto = new CategoryRequestDTO();
-        dto.setName("TV");
-        Category categoryNew = new Category();
-        categoryNew.setName(dto.getName());
+        // creating entity
+        category = new Category();
+        category.setName(requestDTO.getName());
+        //saving category
+        categoryRepository.save(category);
+
         //when
-        CategoryResponseDTO categoryResponseDTO = new CategoryResponseDTO();
 
-        categoryResponseDTO.setName(category.getName());
-
-        CategoryResponseDTO savedObj = categoryService.saveCategory(dto);
         //then
-        assertThat(savedObj).isNotNull();
+        System.out.println(requestDTO.getName()+" "+category.getName());
+        assertEquals(requestDTO.getName(), category.getName());
+        //we can test in this way also
+        assertThat(categoryService.saveCategory(requestDTO)).isNotNull();
+
 
     }
 
     @Test
-    @DisplayName("Test save category when the categoryName is already in DB. We shoudl get exception")
+    @DisplayName("Test save category when the categoryName is already in DB. We should get exception")
     void saveCategoryWithException() {
 
         //given-preconditions
@@ -71,13 +73,19 @@ class CategoryServiceTest {
 
         //when
         //then
-//        assertThrows(com.tpe.exception.ConflictException.class, ()->{
-//            categoryService.saveCategory(request);
-//        });
+
+        assertThrows(com.tpe.exception.ConflictException.class, ()->{
+            categoryService.saveCategory(request);
+        });
+        //another way to test exception if exception is thrown
+        //we can test exception class and the message which will be thrown
+
         assertThatThrownBy(()->categoryService.saveCategory(request))
                 .isInstanceOf(com.tpe.exception.ConflictException.class)
                 .hasMessage("The " + request.getName() + " already exists");
 
+        //verify that categoryRepository.save() never executed
+        verify(categoryRepository, never()).save(any());
 
 
     }
