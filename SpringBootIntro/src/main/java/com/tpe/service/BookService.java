@@ -51,4 +51,13 @@ public class BookService {
         Book book = getBookById(id);
         return new BookDTO(book.getId(), book.getName(), book.getStudent());
     }
+
+    public void updateBook(Long id, Book book) {
+
+        Book bookToUpdate = getBookById(id);
+        bookToUpdate.setStudent(book.getStudent());
+        bookToUpdate.setName(book.getName());
+        bookRepository.save(bookToUpdate);
+
+    }
 }
