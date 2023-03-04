@@ -3,6 +3,7 @@ package com.tpe.controller;
 import com.tpe.dto.UserRequest;
 import com.tpe.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class UserController {
     public ResponseEntity<String> registerUser(@Valid @RequestBody UserRequest userRequest){
         String message = "User has been created successfully!";
         userService.saveUser(userRequest);
-        return ResponseEntity.ok(message);
+        return new ResponseEntity<>(message, HttpStatus.CREATED);
     }
 
 

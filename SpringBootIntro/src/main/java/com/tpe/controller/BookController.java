@@ -59,4 +59,13 @@ public class BookController {
 
         return ResponseEntity.ok(bookDTO);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateBook(@RequestBody @Valid Book book){
+
+        bookService.updateBook(book);
+
+        return ResponseEntity.ok("Update completed!");
+
+    }
 }

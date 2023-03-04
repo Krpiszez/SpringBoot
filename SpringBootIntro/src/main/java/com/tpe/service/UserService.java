@@ -32,6 +32,7 @@ public class UserService {
         user.setUserName(userRequest.getUserName());
 
 //        user.setPassword(userRequest.getPassword()); //password is not being set this way because it must be encoded before send to db
+        // Here password is being encoded.
         String userPassword = userRequest.getPassword();
         String encoderPassword = passwordEncoder.encode(userPassword);
         user.setPassword(encoderPassword);

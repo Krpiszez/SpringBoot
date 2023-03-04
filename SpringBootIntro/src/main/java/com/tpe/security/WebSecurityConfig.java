@@ -24,15 +24,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf()
+                .csrf()// research this on web
                 .disable()
-                .authorizeHttpRequests()
-                .antMatchers("/", "index.html", "js/*", "css/*", "/register")
-                .permitAll()/*.and().authorizeRequests().antMatchers("/students/**").hasRole("ADMIN")
-                */.anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+                .authorizeHttpRequests()// to show the things that is neeed to be authorized
+                .antMatchers("/", "/index.html", "/js/*", "/css/*", "/register")// here the things that no need to be authorized.
+                .permitAll().and().authorizeRequests()
+                .antMatchers("/students/**").hasRole("ADMIN")// here authorization goes up to class level from method level!
+                .anyRequest()// all request that is not above must be authorized
+                .authenticated()// should be authenticated.
+                .and()// and
+                .httpBasic();// use basic authentication.
     }
     @Bean
     public PasswordEncoder passwordEncoder(){

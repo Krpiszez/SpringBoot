@@ -40,7 +40,9 @@ public class StudentController {
         map.put("status", "true");
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')") // here this annotation is about security and it lets the role it is given to access this method.
+    // but it is in metho level it can be handled in class level as well, to do that we go to WebSecurityConfig and we add this part:
+    // .and().authorizeRequests().antMatchers("/students/**").hasRole("ADMIN") after permitAll() method.
     @GetMapping
     public ResponseEntity<List<Student>> getAllStudents(){
         List<Student> studentList = studentService.getAllStudents();
