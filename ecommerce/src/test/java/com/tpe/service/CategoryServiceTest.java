@@ -11,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,7 +52,8 @@ class CategoryServiceTest {
         category = new Category();
         category.setName(requestDTO.getName());
         //saving category
-        categoryRepository.save(category);
+        categoryRepository.save(category); // this method is coming from data JPA
+
 
         //when
 
@@ -82,7 +85,7 @@ class CategoryServiceTest {
 
         assertThatThrownBy(()->categoryService.saveCategory(request))
                 .isInstanceOf(com.tpe.exception.ConflictException.class)
-                .hasMessage("The " + request.getName() + " already exists");
+                .hasMessage("Category with the name: "+ request.getName() + " already exists!");
 
         //verify that categoryRepository.save() never executed
         verify(categoryRepository, never()).save(any());
@@ -116,8 +119,39 @@ class CategoryServiceTest {
     }
 
     @Test
-    @Disabled
-    void getCategoryEntityById() {
+    @DisplayName("Test case when the requested id is already in DB!")
+    void testGetCategoryEntityByIdWhenThereIsCategory() {
+        //given
+        category = new Category();
+        category.setId(1L);
+        category.setName("Mike");
+        given(categoryRepository.findById(1L)).willReturn(Optional.ofNullable(category));
+
+        //when
+        Category categoryFound = categoryService.getCategoryEntityById(1L);
+
+        //then
+        assertThat(categoryFound).isNotNull();
+
+
+    }
+
+    @Test
+    @DisplayName("Test case when the requested id is not in DB!")
+    void testGetCategoryEntityByIdForException() {
+        //given
+//        category = new Category();
+//        category.setId(1L);
+//        category.setName("Mike");
+        given(categoryRepository.findById(2L)).willReturn(Optional.empty());
+
+        //when
+
+
+        //then
+        assertThatThrownBy(()->categoryService.getCategoryEntityById(2L))
+                .isInstanceOf(com.tpe.exception.ResourceNotFoundException.class)
+                .hasMessage("Category with id: " + 2L + " is not found!");
     }
 
     @Test
