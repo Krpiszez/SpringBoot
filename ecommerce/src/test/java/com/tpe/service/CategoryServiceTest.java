@@ -11,6 +11,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -18,8 +21,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class) // to initialize mock object
 class CategoryServiceTest {
@@ -162,5 +164,22 @@ class CategoryServiceTest {
     @Test
     @Disabled
     void updateCategoryById() {
+    }
+
+    @Test
+    void testGetAllCategories(){
+        category = new Category(1L, "Mark");
+        Category category1 = new Category(2L, "Tom");
+
+        given(categoryRepository.findAll()).willReturn(List.of(category, category1));
+
+        List<Category> categoryList = categoryService.getAllCategories();
+
+        assertThat(categoryList).isNotNull();
+        assertThat(categoryList.size()).isEqualTo(2);
+        verify(categoryRepository, times(1)).findAll();
+
+
+
     }
 }
