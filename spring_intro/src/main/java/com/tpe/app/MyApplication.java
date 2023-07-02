@@ -6,6 +6,8 @@ import com.tpe.service.MailService;
 import com.tpe.service.MessageService;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import java.awt.*;
+
 public class MyApplication {
 
     public static void main(String[] args) {
@@ -26,6 +28,18 @@ public class MyApplication {
         //MessageService service = context.getBean(MessageService.class);
         MessageService service = context.getBean("mailService", MessageService.class); // here the exception is solved by giving components name.
         service.sendMessage(message);
+        MessageService service2 = context.getBean("mailService", MessageService.class); // here if we create another variable from same place
+        // it is not going to create another object both will refer to same object in memory so this will not consume any space in memory. It is
+        // coming from being Singleton. @Scope(value="singleton") == this is default for our container in Spring. Check MailService class.
+        System.out.println(service2==service);// it prints false when we use @Scope(value = "prototype")
+
+        // Call Point from Container
+
+        Point point = context.getBean("point", Point.class);
+        System.out.println("X coordinate: " + point.getX());
+
+        context.close();// Life cycle of created beans will end
+
 
     }
 
