@@ -24,7 +24,7 @@ public class CustomerService {
 
     public void saveCustomer(CustomerRequest customerRequest) {
         Customer customer = new Customer();
-        if (customerRepository.existsByEmail(customerRequest.getEmail())){
+        if (customerRepository.existsByEmail(customerRequest.getEmail()) || customerRepository.existsByUser(userService.findUserByName(customerRequest.getUserName()))){
             throw new ConflictException("Customer with email: " + customerRequest.getEmail() + " already exists!");
         }
         customer.setName(customerRequest.getName());
@@ -64,5 +64,10 @@ public class CustomerService {
                         customer.getEmail(), customer.getPhone(), customer.getUser().getUserName());
 
         return customerResponse;
+    }
+
+    public void deleteCustomer(Long id) {
+        Customer customer = getCustomerById(id);
+        customerRepository.delete(customer);
     }
 }

@@ -32,7 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests().antMatchers("/register/**", "/login").permitAll()
-                .and().authorizeRequests().antMatchers("/customer/**").hasRole("CUSTOMER")
+                .antMatchers("/customer/**").access("hasRole('CUSTOMER') or hasRole('ADMIN')") // here this line does the job of 2 lines below
+//                .and().authorizeRequests().antMatchers("/customer/**").hasRole("CUSTOMER")
+//                .and().authorizeRequests().antMatchers("/customer/**").hasRole("ADMIN")
                 .and().authorizeRequests().antMatchers("/**").hasRole("ADMIN")
                 .and().authorizeRequests().antMatchers("/shop-owner/**").hasRole("SHOPOWNER")
                 .anyRequest().authenticated();

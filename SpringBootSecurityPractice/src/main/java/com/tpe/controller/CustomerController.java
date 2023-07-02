@@ -6,6 +6,7 @@ import com.tpe.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class CustomerController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<CustomerResponse>> getAllCustomers(){
         List<CustomerResponse> customerResponses = customerService.getAllCustomers();
         return ResponseEntity.ok(customerResponses);
@@ -35,6 +37,13 @@ public class CustomerController {
     public ResponseEntity<CustomerResponse> getCustomerById(@PathVariable("id") Long id){
         CustomerResponse customerResponse = customerService.getCustomerResponseById(id);
         return ResponseEntity.ok(customerResponse);
+    }
+
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> deleteCustomer(@PathVariable Long id){
+        customerService.deleteCustomer(id);
+        return ResponseEntity.ok("Customer has been deleted!");
     }
 
 
