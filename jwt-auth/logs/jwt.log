@@ -57,3 +57,6 @@
 2023-02-23 10:00:47,942 INFO  [restartedMain] org.springframework.boot.web.embedded.tomcat.TomcatWebServer:Tomcat started on port(s): 8082 (http) with context path ''
 2023-02-23 10:00:47,954 INFO  [restartedMain] com.tpe.JwtAuthApplication:Started JwtAuthApplication in 4.231 seconds (JVM running for 5.081)
 2023-02-23 10:00:48,104 INFO  [RMI TCP Connection(3)-192.168.0.24] org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]:Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-23 10:46:28,309 INFO  [SpringApplicationShutdownHook] org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean:Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-23 10:46:28,312 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown initiated...
+2023-02-23 10:46:28,316 INFO  [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource:HikariPool-1 - Shutdown completed.
