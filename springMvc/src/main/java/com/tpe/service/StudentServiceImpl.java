@@ -1,6 +1,7 @@
 package com.tpe.service;
 
 import com.tpe.domain.Student;
+import com.tpe.exception.ResourceExistException;
 import com.tpe.exception.ResourceNotFoundException;
 import com.tpe.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +24,14 @@ public class StudentServiceImpl implements StudentService{
     public Student findStudentById(Long id) {
         //Optional<Student> student = studentRepository.findById(id);// it can be done like this, but we will improve it below
         Student student= studentRepository.findById(id)
-                .orElseThrow(()-> new Resource NotFoundException("Student is not found with id: " + id));
+                .orElseThrow(()-> new ResourceNotFoundException("Student is not found with id: " + id));
         return student;
     }
 
     @Override
     public void saveStudent(Student student) {
         if(studentRepository.exist(student)){
-            throw
+            throw new ResourceExistException("Resource already exist!");
         }
         studentRepository.save(student);
     }
