@@ -23,13 +23,15 @@ public class StudentServiceImpl implements StudentService{
     public Student findStudentById(Long id) {
         //Optional<Student> student = studentRepository.findById(id);// it can be done like this, but we will improve it below
         Student student= studentRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Student is not found with id: " + id));
+                .orElseThrow(()-> new Resource NotFoundException("Student is not found with id: " + id));
         return student;
     }
 
     @Override
     public void saveStudent(Student student) {
-        if(studentRepository.)
+        if(studentRepository.exist(student)){
+            throw
+        }
         studentRepository.save(student);
     }
 
