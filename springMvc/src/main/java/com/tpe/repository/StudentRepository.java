@@ -9,6 +9,7 @@ public interface StudentRepository {// Here we will create methods for CRUD oper
 
     List<Student> getAll(); // select * from tbl_student
     Optional<Student> findById(Long id); // we use optional here because from here we may get NullPointerException it handles that
+    boolean exist(Student student);
     void save(Student student);
     void update(Student student);
     void delete(Long id);
